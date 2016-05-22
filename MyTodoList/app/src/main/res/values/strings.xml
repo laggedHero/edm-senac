@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tu tem que sabê o que tu qué</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_fail_all">Fracassei na vida</string>
+    <string name="todo_title">Title</string>
+    <string name="todo_description">Description</string>
+    <string name="save">Save</string>
+    <string name="fail_all_motivational">Seje um fracassado na vida, sim, amiguinho.</string>
+    <string name="fail_all_already">Você já fracassou tudo nessa vida, tente na próxima!</string>
+    <string name="fail_item">Seu fracassado de merda.</string>
+    <string name="fail_item_fail_up">Esconda seu fracasso.</string>
+    <string name="fail_item_fail_down">É mais gostoso.</string>
+</resources>
