@@ -4,7 +4,7 @@
     <string name="main_screen_title">My ToDo llyst amiguinhos</string>
     <string name="add_task_screen_title">Adicionar fracasso</string>
     <string name="todo_title">Nome da tarefa</string>
-    <string name="todo_description">O que você não vou fazer</string>
+    <string name="todo_description">O que não vou fazer</string>
     <string name="save">Salvar</string>
     <string name="add_task_invalid_message">Fali du seu obigetivo</string>
     <string name="fail_all_motivational">Seje um fracassado na vida, sim, amiguinho.</string>
