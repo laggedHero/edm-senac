@@ -3,6 +3,7 @@ package net.laggedhero.mytodolist
 import android.content.ContentValues
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_add_item.*
 
@@ -19,6 +20,11 @@ class AddItemActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         todo_submit.setOnClickListener {
+            if (!isValid()) {
+                showInvalidWarning()
+                return@setOnClickListener
+            }
+
             saveTodoItem()
             finish()
         }
@@ -32,6 +38,14 @@ class AddItemActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun isValid(): Boolean {
+        return !todo_title_edit_text.text.toString().isNullOrBlank() and !todo_desc_edit_text.text.toString().isNullOrBlank()
+    }
+
+    private fun showInvalidWarning() {
+        Snackbar.make(todo_submit, R.string.add_task_invalid_message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun saveTodoItem() {

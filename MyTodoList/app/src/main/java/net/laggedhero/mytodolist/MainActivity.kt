@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
     }
 
     private lateinit var adapter: ToDoItemListAdapter
-    private val paint = Paint()
+    private val paint = Paint().apply { color = Color.parseColor("#4CAF50") }
     private val checkBitmap by lazy { BitmapFactory.decodeResource(resources, R.drawable.ic_check_white_24dp) }
     private val dollyBitmap by lazy { BitmapFactory.decodeResource(resources, R.drawable.dolly) }
 
@@ -37,10 +37,9 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        setTitle(R.string.main_screen_title)
 
         fab.setOnClickListener { showAddItemScreen() }
-
-        paint.color = Color.parseColor("#4CAF50")
 
         adapter = ToDoItemListAdapter()
 
@@ -63,36 +62,42 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
             override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
                 val itemView = viewHolder.itemView
 
+                val top = itemView.top.toFloat()
+                val bottom = itemView.bottom.toFloat()
+                val halfItemViewHeight = itemView.height / 2
+
                 if (dX > 0) {
-                    // positive
+                    val left = itemView.left.toFloat()
+
                     canvas.drawRect(
-                            itemView.left.toFloat(),
-                            itemView.top.toFloat(),
+                            left,
+                            top,
                             dX,
-                            itemView.bottom.toFloat(),
+                            bottom,
                             paint
                     );
 
                     canvas.drawBitmap(
                             checkBitmap,
-                            itemView.left.toFloat() + itemView.context.dpToPx(16f),
-                            itemView.top.toFloat() + itemView.height / 2 - checkBitmap.height / 2,
+                            left + itemView.context.dpToPx(16f),
+                            top + halfItemViewHeight - checkBitmap.height / 2,
                             paint
                     )
                 } else {
-                    // negative
+                    val right = itemView.right.toFloat()
+
                     canvas.drawRect(
-                            itemView.right.toFloat() + dX,
-                            itemView.top.toFloat(),
-                            itemView.right.toFloat(),
-                            itemView.bottom.toFloat(),
+                            right + dX,
+                            top,
+                            right,
+                            bottom,
                             paint
                     );
 
                     canvas.drawBitmap(
                             dollyBitmap,
-                            itemView.right.toFloat() - dollyBitmap.width - itemView.context.dpToPx(16f),
-                            itemView.top.toFloat() + itemView.height / 2 - dollyBitmap.height / 2,
+                            right - dollyBitmap.width - itemView.context.dpToPx(16f),
+                            top + halfItemViewHeight - dollyBitmap.height / 2,
                             paint
                     )
                 }
