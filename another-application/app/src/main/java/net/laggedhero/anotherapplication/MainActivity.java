@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -101,6 +102,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 public void onClick(View v) {
                     Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                     startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
+                }
+            });
+        }
+
+        Button openMapButton = (Button) findViewById(R.id.openMapButton);
+        if (openMapButton != null) {
+            openMapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    startActivity(intent);
                 }
             });
         }
