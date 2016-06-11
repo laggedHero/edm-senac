@@ -30,6 +30,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
+    compile 'com.google.android.gms:play-services-auth:9.0.2'
+
     compile 'com.facebook.android:facebook-android-sdk:4.+'
 
     testCompile 'junit:junit:4.12'
@@ -43,3 +45,5 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
+
+apply plugin: 'com.google.gms.google-services'
