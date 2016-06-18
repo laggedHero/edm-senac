@@ -21,6 +21,10 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.GridBasedAlgorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private GoogleMap googleMap;
@@ -92,19 +96,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             googleMap.addMarker(new MarkerOptions().position(latLng).title("My marker"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-            addItems(latLng);
+            addItems();
         }
     }
 
-    private void addItems(LatLng position) {
-        double lat = position.latitude;
-        double lng = position.longitude;
+    private void addItems() {
+        Call<Positions> positionsCall = ((AnotherApplication) getApplication()).service.searchPositions();
 
-        for (int i = 0; i < 10; i++) {
-            double offset = i / 60d;
-            lat = lat + offset;
-            lng = lng + offset;
-            clusterManager.addItem(new MapClusterItem(lat, lng));
-        }
+        positionsCall.enqueue(new Callback<Positions>() {
+            @Override
+            public void onResponse(Call<Positions> call, Response<Positions> response) {
+                Positions positions = response.body();
+                for (int i = 0, size = positions.posicoes.size(); i < size; i++) {
+                    final Position position = positions.posicoes.get(i);
+                    clusterManager.addItem(new MapClusterItem(position.latitude, position.longitude));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Positions> call, Throwable t) {
+                //
+            }
+        });
     }
 }
