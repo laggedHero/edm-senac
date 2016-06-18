@@ -28,6 +28,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import net.laggedhero.anotherapplication.navigation.NavigationActivity;
+
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MainActivity";
@@ -112,6 +114,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        Button openNavigationButton = (Button) findViewById(R.id.openNavigationButton);
+        if (openNavigationButton != null) {
+            openNavigationButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        Button openSensorListButton = (Button) findViewById(R.id.openSensorListButton);
+        if (openSensorListButton != null) {
+            openSensorListButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, SensorListActivity.class);
                     startActivity(intent);
                 }
             });

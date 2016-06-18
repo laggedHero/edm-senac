@@ -5,6 +5,8 @@ import android.app.Application;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import net.laggedhero.anotherapplication.navigation.service.GoogleNavigationService;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -13,6 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 public class AnotherApplication extends Application {
 
     public MyServiceInterface service;
+    public GoogleNavigationService googleNavigationService;
 
     @Override
     public void onCreate() {
@@ -30,5 +33,12 @@ public class AnotherApplication extends Application {
                 .build();
 
         service = retrofit.create(MyServiceInterface.class);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://maps.googleapis.com")
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build();
+
+        googleNavigationService = retrofit.create(GoogleNavigationService.class);
     }
 }

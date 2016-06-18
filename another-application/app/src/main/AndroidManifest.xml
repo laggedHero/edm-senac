@@ -54,6 +54,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".navigation.NavigationActivity"
+            android:label="@string/title_activity_navigation"></activity>
+
+        <activity android:name=".SensorListActivity" />
     </application>
 
 </manifest>

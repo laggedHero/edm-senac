@@ -38,4 +38,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:text="@string/open_map" />
+
+    <Button
+        android:id="@+id/openNavigationButton"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/openMapButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/open_navigation" />
+
+    <Button
+        android:id="@+id/openSensorListButton"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/openNavigationButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/open_sensor_list" />
 </RelativeLayout>

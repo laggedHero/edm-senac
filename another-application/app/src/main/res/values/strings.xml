@@ -2,4 +2,10 @@
     <string name="app_name">Another Application</string>
     <string name="title_activity_maps">Map</string>
     <string name="open_map">Open Map</string>
+    <string name="open_navigation">Open Navigation</string>
+    <string name="open_sensor_list">Open Sensor List</string>
+    <string name="title_activity_navigation">Map</string>
+
+    <string name="origin">Origin</string>
+    <string name="destination">Destination</string>
 </resources>
