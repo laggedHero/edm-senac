@@ -4,8 +4,15 @@
     <string name="open_map">Open Map</string>
     <string name="open_navigation">Open Navigation</string>
     <string name="open_sensor_list">Open Sensor List</string>
+    <string name="open_realm_list">Open Realm List</string>
     <string name="title_activity_navigation">Map</string>
 
     <string name="origin">Origin</string>
     <string name="destination">Destination</string>
+    <string name="title_activity_realm_list">RealmListActivity</string>
+    <string name="task_name">Nome</string>
+    <string name="save_task">Salvar</string>
+    <string name="task_description">Descrição</string>
+    <string name="task_location">Local</string>
+    <string name="task_due_date">Término</string>
 </resources>

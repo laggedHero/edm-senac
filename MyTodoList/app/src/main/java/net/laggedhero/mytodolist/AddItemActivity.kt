@@ -49,10 +49,11 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun saveTodoItem() {
-        val values = ContentValues()
-        values.put(MyToDoListContract.ToDoItems.COLUMN_TITLE, todo_title_edit_text.text.toString())
-        values.put(MyToDoListContract.ToDoItems.COLUMN_DESCRIPTION, todo_desc_edit_text.text.toString())
-        values.put(MyToDoListContract.ToDoItems.COLUMN_CREATED_AT, Date().time)
+        val values = ContentValues().apply {
+            put(MyToDoListContract.ToDoItems.COLUMN_TITLE, todo_title_edit_text.text.toString())
+            put(MyToDoListContract.ToDoItems.COLUMN_DESCRIPTION, todo_desc_edit_text.text.toString())
+            put(MyToDoListContract.ToDoItems.COLUMN_CREATED_AT, Date().time)
+        }
 
         contentResolver.insert(MyToDoListContract.ToDoItems.CONTENT_URI, values)
     }

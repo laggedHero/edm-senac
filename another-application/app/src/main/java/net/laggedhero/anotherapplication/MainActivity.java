@@ -2,6 +2,7 @@ package net.laggedhero.anotherapplication;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,11 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import net.laggedhero.anotherapplication.navigation.NavigationActivity;
+import net.laggedhero.anotherapplication.realmlist.RealmListActivity;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -140,6 +146,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
             });
         }
+
+        Button openRealmListButton = (Button) findViewById(R.id.openRealmListButton);
+        if (openRealmListButton != null) {
+            openRealmListButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, RealmListActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        Call<AgeObject> ageObjectCall = ((AnotherApplication) getApplication()).service.getAge();
+        ageObjectCall.enqueue(new Callback<AgeObject>() {
+            @Override
+            public void onResponse(Call<AgeObject> call, Response<AgeObject> response) {
+                AgeObject ageObject = response.body();
+                Snackbar.make(nameTextView, String.valueOf(ageObject.age), Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<AgeObject> call, Throwable t) {
+                //
+            }
+        });
     }
 
     @Override

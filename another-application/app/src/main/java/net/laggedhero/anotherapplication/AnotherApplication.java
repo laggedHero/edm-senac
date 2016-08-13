@@ -7,6 +7,8 @@ import com.facebook.appevents.AppEventsLogger;
 
 import net.laggedhero.anotherapplication.navigation.service.GoogleNavigationService;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -16,6 +18,7 @@ public class AnotherApplication extends Application {
 
     public MyServiceInterface service;
     public GoogleNavigationService googleNavigationService;
+    public Realm realm;
 
     @Override
     public void onCreate() {
@@ -40,5 +43,12 @@ public class AnotherApplication extends Application {
                 .build();
 
         googleNavigationService = retrofit.create(GoogleNavigationService.class);
+
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
+        realm = Realm.getDefaultInstance();
+
     }
 }

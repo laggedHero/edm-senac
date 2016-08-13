@@ -57,9 +57,13 @@
 
         <activity
             android:name=".navigation.NavigationActivity"
-            android:label="@string/title_activity_navigation"></activity>
-
+            android:label="@string/title_activity_navigation" />
         <activity android:name=".SensorListActivity" />
+        <activity
+            android:name=".realmlist.RealmListActivity"
+            android:label="@string/title_activity_realm_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".realmlist.newitem.RealmNewItemActivity"></activity>
     </application>
 
 </manifest>
