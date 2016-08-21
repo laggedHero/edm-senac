@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Final App</string>
+    <string name="splash_text">NASA\'s Astronomy Picture of the Day</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tutorial_skip_action">Skip</string>
+    <string name="tutorial_ok_action">OK</string>
 </resources>

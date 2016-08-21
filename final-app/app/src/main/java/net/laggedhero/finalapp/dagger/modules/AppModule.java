@@ -1,10 +1,6 @@
 package net.laggedhero.finalapp.dagger.modules;
 
 import android.app.Application;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import net.laggedhero.finalapp.utils.PreferenceUtils;
 
 import javax.inject.Singleton;
 
@@ -24,17 +20,5 @@ public class AppModule {
     @Singleton
     Application providesApplication() {
         return application;
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
-    }
-
-    @Provides
-    @Singleton
-    PreferenceUtils providesPreferenceUtils(SharedPreferences sharedPreferences) {
-        return new PreferenceUtils(sharedPreferences);
     }
 }
