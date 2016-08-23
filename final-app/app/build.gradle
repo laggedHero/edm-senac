@@ -34,16 +34,20 @@ dependencies {
 
     compile "com.google.dagger:dagger:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    provided 'javax.annotation:jsr250-api:1.0'
 
+    compile "com.android.support:support-v4:$supportLibVersion"
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support:recyclerview-v7:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
 
     compile "com.google.android.gms:play-services-auth:$playServicesVersion"
     compile "com.google.android.gms:play-services-maps:$playServicesVersion"
     compile "com.google.android.gms:play-services-location:$playServicesVersion"
 
+    compile 'com.google.maps.android:android-maps-utils:0.4.+'
 
     compile "com.google.firebase:firebase-core:$playServicesVersion"
     compile "com.google.firebase:firebase-database:$playServicesVersion"
@@ -52,31 +56,24 @@ dependencies {
     compile "io.requery:requery-android:$requeryVersion"
     annotationProcessor "io.requery:requery-processor:$requeryVersion"
 
-    compile "com.google.auto.value:auto-value:$autoValueVersion"
-    annotationProcessor "com.google.auto.value:auto-value:$autoValueVersion"
-
-
-    compile "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
-
-
-
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
-    compile 'com.google.maps.android:android-maps-utils:0.4.+'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.moshi:moshi:1.2.0'
     compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.android.support:support-v4:24.2.0'
-    testCompile 'junit:junit:4.12'
+
+    compile "com.google.auto.value:auto-value:$autoValueVersion"
+    annotationProcessor "com.google.auto.value:auto-value:$autoValueVersion"
+
     annotationProcessor 'com.ryanharter.auto.value:auto-value-moshi:0.3.2'
-    provided 'javax.annotation:jsr250-api:1.0'
+
+    compile "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    testCompile 'junit:junit:4.12'
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }
-
-
-
 
 apply plugin: 'com.google.gms.google-services'

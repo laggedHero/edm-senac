@@ -2,41 +2,28 @@ package net.laggedhero.finalapp;
 
 import android.app.Application;
 
-import net.laggedhero.finalapp.dagger.components.DaggerNetworkComponent;
-import net.laggedhero.finalapp.dagger.components.DaggerPersistenceComponent;
-import net.laggedhero.finalapp.dagger.components.NetworkComponent;
-import net.laggedhero.finalapp.dagger.components.PersistenceComponent;
+import net.laggedhero.finalapp.dagger.components.ApplicationComponent;
+import net.laggedhero.finalapp.dagger.components.DaggerApplicationComponent;
 import net.laggedhero.finalapp.dagger.modules.AppModule;
 import net.laggedhero.finalapp.dagger.modules.NetworkModule;
 import net.laggedhero.finalapp.dagger.modules.PersistenceModule;
 
 public class FinalAppApplication extends Application {
 
-    private NetworkComponent networkComponent;
-    private PersistenceComponent persistenceComponent;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        final AppModule appModule = new AppModule(this);
-
-        networkComponent = DaggerNetworkComponent.builder()
-                .appModule(appModule)
+        applicationComponent = DaggerApplicationComponent.builder()
+                .appModule(new AppModule(this))
                 .networkModule(new NetworkModule("https://api.nasa.gov"))
-                .build();
-
-        persistenceComponent = DaggerPersistenceComponent.builder()
-                .appModule(appModule)
                 .persistenceModule(new PersistenceModule())
                 .build();
     }
 
-    public NetworkComponent getNetworkComponent() {
-        return networkComponent;
-    }
-
-    public PersistenceComponent getPersistenceComponent() {
-        return persistenceComponent;
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }

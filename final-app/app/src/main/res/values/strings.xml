@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tutorial_skip_action">Skip</string>
     <string name="tutorial_ok_action">OK</string>
+
+    <string name="tutorial_step_one_text">NASA releases a new Astronomy Picture every day</string>
+    <string name="tutorial_step_two_text">Get the new daily picture in your hands</string>
+    <string name="tutorial_step_three_text">Be amazed</string>
 </resources>

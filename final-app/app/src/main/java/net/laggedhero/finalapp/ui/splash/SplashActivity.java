@@ -23,7 +23,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getFinalAppApplication().getPersistenceComponent().inject(this);
+        getFinalAppApplication().getApplicationComponent().inject(this);
 
         setContentView(R.layout.activity_splash);
 
