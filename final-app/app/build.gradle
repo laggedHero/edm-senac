@@ -61,6 +61,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
 
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
     compile "com.google.auto.value:auto-value:$autoValueVersion"
     annotationProcessor "com.google.auto.value:auto-value:$autoValueVersion"
 

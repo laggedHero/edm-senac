@@ -23,7 +23,7 @@ public class TutorialActivity extends BaseActivity {
     @BindView(R.id.container)
     ViewPager viewPager;
 
-    @BindView(R.id.skip_button)
+    @BindView(R.id.skipButton)
     Button skipButton;
 
     @Override
