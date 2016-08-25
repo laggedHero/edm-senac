@@ -6,7 +6,7 @@ buildscript {
     ext.daggerVersion = "2.5"
     ext.requeryVersion = "1.0.0-rc3"
     ext.autoValueVersion = "1.2"
-    ext.butterknifeVersion = "8.1.0"
+    ext.butterknifeVersion = "8.3.0"
     repositories {
         jcenter()
     }

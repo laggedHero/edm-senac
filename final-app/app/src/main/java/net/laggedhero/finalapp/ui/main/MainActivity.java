@@ -21,17 +21,22 @@ import net.laggedhero.finalapp.models.NasaApod;
 import net.laggedhero.finalapp.services.NasaApodService;
 import net.laggedhero.finalapp.ui.base.BaseActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.requery.Persistable;
 import io.requery.sql.EntityDataStore;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
+
+    private static final SimpleDateFormat APOD_DATE = new SimpleDateFormat("yyyy-MM-dd");
 
     @Inject
     FirebaseDatabase firebaseDatabase;
@@ -40,7 +45,7 @@ public class MainActivity extends BaseActivity {
     NasaApodService nasaApodService;
 
     @Inject
-    EntityDataStore<Persistable> dataStore;
+    EntityDataStore<Object> dataStore;
 
     @BindView(R.id.picture)
     ImageView picture;
@@ -64,6 +69,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        APOD_DATE.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         getFinalAppApplication().getApplicationComponent().inject(this);
 
         setContentView(R.layout.activity_main);
@@ -81,7 +88,7 @@ public class MainActivity extends BaseActivity {
         firebaseDatabase.getReference().child("nasa-api-key").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                requestNasaApod(dataSnapshot.getValue(String.class));
+                loadNasaApod(dataSnapshot.getValue(String.class));
             }
 
             @Override
@@ -91,6 +98,17 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void loadNasaApod(String apiKey) {
+        // from cache first
+        final NasaApod nasaApod = getCachedResponse();
+        if (nasaApod != null) {
+            populateFrom(nasaApod);
+            return;
+        }
+
+        requestNasaApod(apiKey);
+    }
+
     private void requestNasaApod(String apiKey) {
         Call<NasaApod> nasaApodCall = nasaApodService.getTodayPhoto(apiKey);
 
@@ -98,6 +116,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onResponse(Call<NasaApod> call, Response<NasaApod> response) {
                 // wow. much success
+                cacheResponse(response.body());
                 populateFrom(response.body());
             }
 
@@ -106,6 +125,14 @@ public class MainActivity extends BaseActivity {
                 // error - see it later
             }
         });
+    }
+
+    private void cacheResponse(NasaApod nasaApod) {
+        dataStore.insert(nasaApod);
+    }
+
+    private NasaApod getCachedResponse() {
+        return dataStore.findByKey(NasaApod.class, getTodayApodDate());
     }
 
     private void populateFrom(NasaApod nasaApod) {
@@ -140,5 +167,9 @@ public class MainActivity extends BaseActivity {
                 .into(picture);
 
         infoArea.setVisibility(View.VISIBLE);
+    }
+
+    private String getTodayApodDate() {
+        return APOD_DATE.format(new Date());
     }
 }

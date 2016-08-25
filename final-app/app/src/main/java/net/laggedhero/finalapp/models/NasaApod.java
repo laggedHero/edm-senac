@@ -8,6 +8,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import io.requery.Entity;
+import io.requery.Key;
 
 @Entity
 @AutoValue
@@ -42,6 +43,7 @@ public abstract class NasaApod {
     @Json(name = "copyright")
     public abstract String getCopyright();
 
+    @Key
     @Json(name = "date")
     public abstract String getApodDate();
 

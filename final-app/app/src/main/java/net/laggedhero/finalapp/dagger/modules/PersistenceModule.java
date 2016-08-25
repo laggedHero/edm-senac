@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.requery.Persistable;
 import io.requery.android.sqlite.DatabaseSource;
 import io.requery.sql.Configuration;
 import io.requery.sql.EntityDataStore;
@@ -46,7 +45,7 @@ public class PersistenceModule {
 
     @Provides
     @Singleton
-    EntityDataStore<Persistable> providesDataStore(Application application) {
+    EntityDataStore<Object> providesDataStore(Application application) {
         DatabaseSource source = new DatabaseSource(application, Models.DEFAULT, 1);
         if (BuildConfig.DEBUG) {
             // use this in development mode to drop and recreate the tables on every upgrade
