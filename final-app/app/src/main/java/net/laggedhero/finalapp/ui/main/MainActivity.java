@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                requestNasaApod("DEMO_KEY");
+                loadNasaApod("DEMO_KEY");
             }
         });
     }
