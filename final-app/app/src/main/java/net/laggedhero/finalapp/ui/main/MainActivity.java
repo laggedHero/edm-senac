@@ -1,6 +1,11 @@
 package net.laggedhero.finalapp.ui.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,14 +16,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import net.laggedhero.finalapp.ApodService;
 import net.laggedhero.finalapp.R;
 import net.laggedhero.finalapp.models.NasaApod;
-import net.laggedhero.finalapp.services.NasaApodService;
 import net.laggedhero.finalapp.ui.base.BaseActivity;
 
 import java.text.SimpleDateFormat;
@@ -30,19 +31,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.requery.sql.EntityDataStore;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
 
     private static final SimpleDateFormat APOD_DATE = new SimpleDateFormat("yyyy-MM-dd");
-
-    @Inject
-    FirebaseDatabase firebaseDatabase;
-
-    @Inject
-    NasaApodService nasaApodService;
 
     @Inject
     EntityDataStore<Object> dataStore;
@@ -65,6 +57,13 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.progress)
     ProgressBar progress;
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadNasaApod();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,50 +84,27 @@ public class MainActivity extends BaseActivity {
         infoArea.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
 
-        firebaseDatabase.getReference().child("nasa-api-key").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                loadNasaApod(dataSnapshot.getValue(String.class));
-            }
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, getIntentFilter());
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                loadNasaApod("DEMO_KEY");
-            }
-        });
+        startService(new Intent(this, ApodService.class));
     }
 
-    private void loadNasaApod(String apiKey) {
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+
+        super.onStop();
+    }
+
+    private void loadNasaApod() {
         // from cache first
         final NasaApod nasaApod = getCachedResponse();
-        if (nasaApod != null) {
-            populateFrom(nasaApod);
+        if (nasaApod == null) {
+            // error
             return;
         }
 
-        requestNasaApod(apiKey);
-    }
-
-    private void requestNasaApod(String apiKey) {
-        Call<NasaApod> nasaApodCall = nasaApodService.getTodayPhoto(apiKey);
-
-        nasaApodCall.enqueue(new Callback<NasaApod>() {
-            @Override
-            public void onResponse(Call<NasaApod> call, Response<NasaApod> response) {
-                // wow. much success
-                cacheResponse(response.body());
-                populateFrom(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<NasaApod> call, Throwable t) {
-                // error - see it later
-            }
-        });
-    }
-
-    private void cacheResponse(NasaApod nasaApod) {
-        dataStore.insert(nasaApod);
+        populateFrom(nasaApod);
     }
 
     private NasaApod getCachedResponse() {
@@ -171,5 +147,12 @@ public class MainActivity extends BaseActivity {
 
     private String getTodayApodDate() {
         return APOD_DATE.format(new Date());
+    }
+
+    private IntentFilter getIntentFilter() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ApodService.CACHE_REFRESHED);
+
+        return intentFilter;
     }
 }

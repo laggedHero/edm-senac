@@ -24,6 +24,10 @@
             android:name=".ui.tutorial.TutorialActivity"
             android:noHistory="true" />
         <activity android:name=".ui.main.MainActivity" />
+
+        <service
+            android:name=".ApodService"
+            android:exported="false" />
     </application>
 
 </manifest>

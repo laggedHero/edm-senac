@@ -1,5 +1,6 @@
 package net.laggedhero.finalapp.dagger.components;
 
+import net.laggedhero.finalapp.ApodService;
 import net.laggedhero.finalapp.dagger.modules.AppModule;
 import net.laggedhero.finalapp.dagger.modules.NetworkModule;
 import net.laggedhero.finalapp.dagger.modules.PersistenceModule;
@@ -19,4 +20,6 @@ public interface ApplicationComponent {
     void inject(TutorialActivity tutorialActivity);
 
     void inject(MainActivity mainActivity);
+
+    void inject(ApodService apodService);
 }
